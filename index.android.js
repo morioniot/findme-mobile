@@ -1,52 +1,53 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from 'react';
+import React from 'react'
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+    AppRegistry,
+    Text,
+    View,
+    ScrollView,
+    Image
+} from 'react-native'
 
-class findme extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
+import dogs from './dogs.json'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+const DogsApp = React.createClass({
+    render: function(){
+        return (
+            <View>
+                <View>
+                    <Text>List of dogs</Text>
+                </View>
+                <ListOfDogs dogs={dogs}/>
+            </View>
+        );
+    }
 });
 
-AppRegistry.registerComponent('findme', () => findme);
+const ListOfDogs = React.createClass({
+    render: function(){
+        const dogs = this.props.dogs;
+        const dogNodes = dogs.map(function(dog){
+            return (<Dog picture={dog.picture}>{dog.name}</Dog>);
+        });
+        return (
+            <ScrollView>
+                {dogNodes}
+            </ScrollView>
+        );
+    }
+});
+
+const Dog = React.createClass({
+    render: function(){
+        return (
+            <View>
+                <Image source={require('./images/dog.png')}/>
+                <Text>{this.props.children}</Text>
+            </View>
+        );
+    }
+});
+
+AppRegistry.registerComponent(
+  'findme',
+  () => DogsApp
+);

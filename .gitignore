@@ -2,6 +2,12 @@
 #
 .DS_Store
 
+#Images
+images/
+
+#Git Ignore
+.gitignore
+
 # Xcode
 #
 build/
