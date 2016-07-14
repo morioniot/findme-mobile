@@ -12,9 +12,9 @@ import dogs from './dogs.json'
 const DogsApp = React.createClass({
     render: function(){
         return (
-            <View>
-                <View>
-                    <Text>List of dogs</Text>
+            <View style={{flex:1}}>
+                <View style={styles.titleBox}>
+                    <Text style={styles.title}>List of dogs</Text>
                 </View>
                 <ListOfDogs dogs={dogs}/>
             </View>
@@ -26,10 +26,10 @@ const ListOfDogs = React.createClass({
     render: function(){
         const dogs = this.props.dogs;
         const dogNodes = dogs.map(function(dog){
-            return (<Dog picture={dog.picture}>{dog.name}</Dog>);
+            return (<Dog picture={dog.picture} key={dog.id}>{dog.name}</Dog>);
         });
         return (
-            <ScrollView>
+            <ScrollView style={{flexDirection:'column'}}>
                 {dogNodes}
             </ScrollView>
         );
@@ -39,13 +39,45 @@ const ListOfDogs = React.createClass({
 const Dog = React.createClass({
     render: function(){
         return (
-            <View>
-                <Image source={require('./images/dog.png')}/>
-                <Text>{this.props.children}</Text>
+            <View style={styles.itemBox}>
+                <Image style={styles.image} source={require('./images/dog.png')}/>
+                <Text style={styles.item}>{this.props.children}</Text>
             </View>
         );
     }
 });
+
+const styles = {
+    titleBox: {
+        backgroundColor: '#ff9800',
+        height: 70
+    },
+    title: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center',
+        marginTop: 20
+    },
+    image: {
+        margin: 5,
+        width: 65,
+        height: 65
+    },
+    itemBox: {
+        flex: 1,
+        backgroundColor: '#ffe0b2',
+        flexDirection: 'row'
+    },
+    item: {
+        color: '#333333',
+        fontSize: 22,
+        height: 35,
+        marginTop: 20,
+        textAlign: 'center',
+        flex:1
+    }
+};
 
 AppRegistry.registerComponent(
   'findme',
