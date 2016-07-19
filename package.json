@@ -6,7 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "base64-js": "^1.1.2",
     "react": "15.2.1",
-    "react-native": "0.29.0"
+    "react-native": "0.29.0",
+    "react-native-ble-manager": "^1.0.0"
   }
 }
