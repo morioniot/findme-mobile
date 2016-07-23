@@ -1,14 +1,16 @@
-export const getMajor = function(hexaBytes){
+import {toIntBuffer, toHexaBuffer, parseTwoComplementHexa} from '../util/hexadecimal'
+
+function getMajor(hexaBytes){
     const majorHexString = "0x" + hexaBytes[25] + hexaBytes[26];
     return parseInt(majorHexString);
 };
 
-export const getMinor = function(hexaBytes){
+function getMinor(hexaBytes){
     const minorHexString = "0x" + hexaBytes[27] + hexaBytes[28];
     return parseInt(minorHexString);
 };
 
-export const getUUID = function(hexaBytes){
+function getUUID(hexaBytes){
     let UUID = "";
     let UUIDIndex = 9;
     const UUIDChunkSizes = [4,2,2,2,6];
@@ -23,7 +25,12 @@ export const getUUID = function(hexaBytes){
     return UUID;
 };
 
-export const validateIBeacon = function(hexaBytes){
+function getRSSI(hexaBytes){
+    const rssiHexString = '0x' + hexaBytes[29];
+    return parseTwoComplementHexa( rssiHexString );
+}
+
+function validateIBeacon(hexaBytes){
     if(
         hexaBytes.length > 0 &&
         hexaBytes[0] === '02' &&
@@ -38,4 +45,24 @@ export const validateIBeacon = function(hexaBytes){
     )
         return true;
     return false;
+};
+
+
+export function processBLEAsIBeacon( bleDevice ) {
+    const intBuffer = toIntBuffer( bleDevice.advertising.data );
+    const hexaBuffer = toHexaBuffer( intBuffer );
+    const device = {};
+    device.raw = hexaBuffer;
+    device.id = bleDevice.id;
+    device.rssi = bleDevice.rssi;
+    if(device.name)
+        device.name = bleDevice.name;
+    device.isIBeacon = validateIBeacon( hexaBuffer );
+    if(device.isIBeacon){
+        device.rssi1m = getRSSI( hexaBuffer );
+        device.uuid = getUUID( hexaBuffer );
+        device.major = getMajor( hexaBuffer );
+        device.minor = getMinor( hexaBuffer );
+    }
+    return device;
 };

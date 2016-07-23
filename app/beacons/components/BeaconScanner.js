@@ -1,9 +1,8 @@
 import React from 'react'
+import {PropTypes} from 'react'
 import {Text, View} from 'react-native'
 import ListOfBeacons from './ListOfBeacons'
-import {initializeScan} from '../../BLE'
-
-import beacons from '../../beacons.json'
+import ScanButton from '../containers/ScanButton'
 
 const styles = {
     title: {
@@ -21,9 +20,9 @@ const styles = {
 
 const BeaconScanner = React.createClass({
 
-    componentDidMount: function(){
-        initializeScan();
-    },
+    propTypes: {beacons: PropTypes.arrayOf(
+        PropTypes.object.isRequired
+    ).isRequired},
 
     render: function(){
         return (
@@ -31,7 +30,8 @@ const BeaconScanner = React.createClass({
                 <View style={styles.title_box}>
                     <Text style={styles.title}>List of Beacons</Text>
                 </View>
-                <ListOfBeacons beacons={beacons}/>
+                <ScanButton/>
+                <ListOfBeacons beacons={this.props.beacons}/>
             </View>
         );
     }

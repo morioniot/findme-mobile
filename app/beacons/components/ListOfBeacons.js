@@ -6,7 +6,7 @@ const ListOfBeacons = React.createClass({
     render: function(){
         const beacons = this.props.beacons;
         const beaconNodes = beacons.map(function(beacon){
-            return (<Beacon picture={beacon.picture} key={beacon.id}>{beacon.name}</Beacon>);
+            return (<Beacon beacon={beacon} key={beacon.id}/>);
         });
         return (
             <ScrollView style={{flexDirection:'column'}}>
