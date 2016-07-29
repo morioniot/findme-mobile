@@ -47,7 +47,6 @@ function validateIBeacon(hexaBytes){
     return false;
 };
 
-
 export function processBLEAsIBeacon( bleDevice ) {
     const intBuffer = toIntBuffer( bleDevice.advertising.data );
     const hexaBuffer = toHexaBuffer( intBuffer );
@@ -66,3 +65,11 @@ export function processBLEAsIBeacon( bleDevice ) {
     }
     return device;
 };
+
+export function processBLEArrayAsIBeacon( bleArray ) {
+    const blesAsIBeacons = [];
+    bleArray.forEach(function( ble ) {
+        blesAsIBeacons.push(processBLEAsIBeacon( ble ));
+    });
+    return blesAsIBeacons;
+}

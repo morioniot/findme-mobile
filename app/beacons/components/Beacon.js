@@ -3,9 +3,10 @@ import {View, Image, Text} from 'react-native'
 
 const styles = {
     container: {
-        flex: 1,
         backgroundColor: '#ffe0b2',
-        flexDirection: 'row'
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 5
     },
     icon: {
         margin: 5,
@@ -13,7 +14,6 @@ const styles = {
         height: 45
     },
     info: {
-        backgroundColor: 'red',
         flex: 1,
         flexDirection: 'row',
         margin: 2

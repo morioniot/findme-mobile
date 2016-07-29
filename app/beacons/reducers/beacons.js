@@ -1,12 +1,10 @@
-import {ADD_DEVICE} from '../actions'
+import {UPDATE_DEVICE_LIST} from '../actions'
 
 //Handles beacons state
-const beaconsReducer = function(state = [], action, invalidated) {
+const beaconsReducer = function(state = [], action) {
     switch ( action.type ) {
-        case ADD_DEVICE:
-            if(invalidated)
-                return [action.device];
-            return[...state, action.device];
+        case UPDATE_DEVICE_LIST:
+            return action.devices;
         default:
             return state;
     }

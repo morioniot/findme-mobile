@@ -8,8 +8,10 @@ let fullScanStartHandler = undefined;
 let fullScanStopHandler = undefined;
 let scanStartHandler = undefined;
 let scanStopHandler = undefined;
+let newDeviceHandler = undefined;
 let scanTime = 1;
 let waitTime = 1;
+let devices = [];
 
 const scan =  function() {
     BleManager.scan([], scanTime)
@@ -22,10 +24,12 @@ const scan =  function() {
 };
 
 const initializeBLE = function() {
+
     NativeAppEventEmitter.addListener('BleManagerStopScan', function(){
         console.log("Scan stopped");
         if(scanStopHandler)
             scanStopHandler();
+        devices = [];
         if(!scanStopFlag)
             setTimeout(scan, waitTime * 1000);
         else {
@@ -34,6 +38,12 @@ const initializeBLE = function() {
             if(fullScanStopHandler)
                 fullScanStopHandler();
         }
+    });
+
+    NativeAppEventEmitter.addListener('BleManagerDiscoverPeripheral', function( device ) {
+        devices.push( device );
+        if( newDeviceHandler )
+            newDeviceHandler();
     });
 };
 
@@ -65,7 +75,7 @@ const onFullScanStop = function( callback ) {
 };
 
 const onNewDevice = function( callback ) {
-    NativeAppEventEmitter.addListener('BleManagerDiscoverPeripheral', callback);
+    newDeviceHandler = callback;
 };
 
 const setScanTime = function( time ) {
@@ -75,6 +85,10 @@ const setScanTime = function( time ) {
 const setWaitTime = function( time ) {
     waitTime = time;
 };
+
+const getDevices = function() {
+    return devices;
+}
 
 const BLE = function() {
     initializeBLE();
@@ -87,7 +101,8 @@ const BLE = function() {
         onFullScanStop,
         onScanStart,
         onScanStop,
-        onNewDevice
+        onNewDevice,
+        getDevices
     };
 };
 
