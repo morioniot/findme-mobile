@@ -1,4 +1,4 @@
-import * as BLE from '../../BLE'
+import ble from '../../BLE'
 import {processBLEAsIBeacon} from '../../ibeacon'
 
 export const START_SCANNING = 'START_SCANNING';
@@ -25,25 +25,30 @@ function invalidateList() {
     return {type: INVALIDATE_LIST};
 }
 
-function configureScan( dispatch ) {
-    BLE.onFullScanStart(function() {
-        dispatch(startScanning());
-    });
-    BLE.onFullScanStop(function() {
-        dispatch(stopScanning());
-    });
-    BLE.onScanStop(function() {
-        dispatch(invalidateList())
-    });
-    BLE.onNewDevice(function( device ) {
-        const processedDevice = processBLEAsIBeacon( device );
-        dispatch(addDevice( processedDevice ));
-    });
+export function configureScan() {
+    return function( dispatch ) {
+        ble.onFullScanStart(function() {
+            dispatch(startScanning());
+        });
+        ble.onFullScanStop(function() {
+            dispatch(stopScanning());
+        });
+        ble.onScanStop(function() {
+            dispatch(invalidateList())
+        });
+        ble.onNewDevice(function( device ) {
+            const processedDevice = processBLEAsIBeacon( device );
+            dispatch(addDevice( processedDevice ));
+        });
+    };
 }
 
-export function startScan() {
-    return function(dispatch) {
-        configureScan(dispatch);
-        BLE.startFullScan();
+export function toggleScan() {
+    return function(dispatch, getState) {
+        const state = getState();
+        if( state.scanning )
+            ble.stopFullScan();
+        else
+            ble.startFullScan();
     };
 }

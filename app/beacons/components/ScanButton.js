@@ -27,12 +27,11 @@ const ScanButton = React.createClass({
 
     render: function() {
         const {scanning, onPress} = this.props;
-        const text = scanning ? 'SCANNING' : 'SCAN';
+        const text = scanning ? 'STOP SCANNING' : 'START SCANNING';
         return (
             <TouchableHighlight
                 style={styles.button}
                 onPress={onPress}
-                disabled={scanning}
             >
                 <Text style={styles.text}>{text}</Text>
             </TouchableHighlight>

@@ -20,9 +20,14 @@ const styles = {
 
 const BeaconScanner = React.createClass({
 
-    propTypes: {beacons: PropTypes.arrayOf(
-        PropTypes.object.isRequired
-    ).isRequired},
+    propTypes: {
+        beacons: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+        initialize: PropTypes.func.isRequired
+    },
+
+    componentDidMount: function() {
+        this.props.initialize();
+    },
 
     render: function(){
         return (
