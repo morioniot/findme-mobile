@@ -6,7 +6,7 @@ const mapStateToProps = function( state ) {
     return {scanning: state.scanning};
 };
 
-const mapDispatchToProps = function(dispatch, ) {
+const mapDispatchToProps = function( dispatch ) {
     return {
         onPress: function(){
             dispatch(toggleScan());

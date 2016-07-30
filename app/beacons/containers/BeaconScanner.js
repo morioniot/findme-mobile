@@ -3,7 +3,10 @@ import {configureScan} from '../actions'
 import BeaconScannerComponent from '../components/BeaconScanner'
 
 const mapStateToProps = function( state ) {
-    return {beacons: state.beacons};
+    return {
+        beacons: state.beacons,
+        settingsFlag: state.settings.active
+    };
 };
 
 const mapDispatchToProps =  function( dispatch ) {
