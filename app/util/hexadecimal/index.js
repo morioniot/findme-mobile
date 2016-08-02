@@ -1,3 +1,5 @@
+import {toByteArray} from 'base64-js'
+
 const toHexaWithZero =  function(byte) {
     const byteString = byte.toString(16);
     if(byteString.length === 1)
@@ -5,12 +7,17 @@ const toHexaWithZero =  function(byte) {
     return byteString;
 };
 
-export const toIntBuffer = function(str) {
+/*export const toIntBuffer = function(str) {
     const decodedStr = atob(str);
     const intBuffer = [];
     for(let i = 0; i < decodedStr.length; i++)
         intBuffer.push(decodedStr.charCodeAt(i));
     return intBuffer;
+};*/
+
+export const toIntBuffer = function( str ) {
+    const intBufferLikeObject = toByteArray( str );
+    return Array.prototype.slice.call( intBufferLikeObject );
 };
 
 export const toHexaBuffer = function(intBuffer) {
