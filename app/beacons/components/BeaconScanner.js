@@ -17,15 +17,21 @@ const styles = {
     },
     title_box: {
         backgroundColor: '#ff9800',
-        flex: 1,
         flexDirection: 'row',
         height: 60
+    },
+    main_container: {
+        flex: 1,
+        flexDirection: 'column'
+    },
+    scanner: {
+        flex: 1
     }
 };
 
 const renderScanner = function( beacons ) {
     return (
-        <View>
+        <View style={styles.scanner}>
             <ScanButton/>
             <ListOfBeacons beacons={beacons}/>
         </View>
@@ -46,7 +52,7 @@ const BeaconScanner = React.createClass({
 
     render: function(){
         return (
-            <View>
+            <View style={styles.main_container}>
                 <View style={styles.title_box}>
                     <Text style={styles.title}>List of Beacons</Text>
                     <SettingsButton />

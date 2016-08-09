@@ -4,7 +4,6 @@ import {View, Image, Text} from 'react-native'
 const styles = {
     container: {
         backgroundColor: '#ffe0b2',
-        flex: 1,
         flexDirection: 'row',
         marginTop: 5
     },
